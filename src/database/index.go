@@ -15,6 +15,7 @@ func Init(url string) {
 	DB = Database{url}
 }
 
+// This function is public cause it has uppercase name
 func (self *Database) Save(key, value string) (int, error) {
 	if value == "err" {
 		return -1, errors.New("This value is not allowed")
@@ -23,6 +24,7 @@ func (self *Database) Save(key, value string) (int, error) {
 	}
 }
 
+// This function is private
 func (self *Database) delete(key, value string) (int, error) {
 	if value == "err" {
 		return -1, errors.New("This value is not allowed")

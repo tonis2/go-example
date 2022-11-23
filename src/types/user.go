@@ -1,5 +1,7 @@
 package types
 
+// User type that holds data
+
 type User struct {
 	Id        string `json:"id"`
 	Email     string `json:"email,omitempty"`

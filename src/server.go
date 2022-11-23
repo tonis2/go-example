@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 	"workshop/src/routes"
 
 	"github.com/julienschmidt/httprouter"
@@ -16,6 +15,10 @@ import (
 const PORT = 8080
 
 func main() {
+
+	// Find type automatically
+	appName := "My server"
+
 	database.Init("psql:test")
 
 	router := httprouter.New()
@@ -23,12 +26,24 @@ func main() {
 	router.POST("/user/register", routes.Register)
 	router.POST("/benefit", routes.SaveBenefit)
 
+	// Create slice of strings
+	var corsValues []string
+
+	corsValues = append(corsValues, "http://localhost:8080")
+	corsValues = append(corsValues, "http://localhost:8000")
+
+	// Loop over string slice
+	for _, value := range corsValues {
+		log.Print("Cors value ", value)
+	}
+
+	// Create server handle with options
 	handler := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split("http://localhost:8080,http://localhost:8000", ","),
+		AllowedOrigins:   corsValues,
 		AllowCredentials: true,
 		AllowedMethods:   []string{"POST", "GET", "PUT", "DELETE", "OPTIONS"},
 	}).Handler(router)
 
-	log.Print("Starting server at ", PORT)
+	log.Printf("Starting %s at %d ", appName, PORT)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(PORT), handler))
 }
