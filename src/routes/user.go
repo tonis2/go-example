@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"workshop/src/database"
-	"workshop/src/types"
+	. "workshop/src/types"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -13,7 +13,7 @@ import (
 func Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var user = types.User{}
+	var user = User{}
 
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
