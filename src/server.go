@@ -12,12 +12,19 @@ import (
 	database "workshop/src/database"
 )
 
-const PORT = 8080
-
 func main() {
+
+	// Create conts, cant change this
+	const PORT = 8080
 
 	// Find type automatically
 	appName := "My server"
+
+	// Create slice of strings
+	var corsValues []string
+
+	corsValues = append(corsValues, "http://localhost:8080")
+	corsValues = append(corsValues, "http://localhost:8000")
 
 	database.Init("psql:test")
 
@@ -25,12 +32,6 @@ func main() {
 
 	router.POST("/user/register", routes.Register)
 	router.POST("/benefit", routes.SaveBenefit)
-
-	// Create slice of strings
-	var corsValues []string
-
-	corsValues = append(corsValues, "http://localhost:8080")
-	corsValues = append(corsValues, "http://localhost:8000")
 
 	// Loop over string slice
 	for _, value := range corsValues {
